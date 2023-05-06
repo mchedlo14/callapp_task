@@ -3,6 +3,8 @@ import './UserTable.css';
 import useJsonDataStore from '../../zustand/store';
 import { Table, Button, Modal, Input, Select } from 'antd';
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
+
 
 
 const UserTable = () => {
@@ -19,10 +21,7 @@ const UserTable = () => {
     const userData = useJsonDataStore((state) => state.jsonData);
 
     const { Option } = Select;
-
-    // const showModal = () => {
-    //     setIsModalVisible(true);
-    // };
+    const navigate = useNavigate()
 
     const showAddModal = () => {
         setAddModal(true)
@@ -178,7 +177,10 @@ const UserTable = () => {
                 userData === null ? <>Loading</>
                     :
                     <>
-                        <Button type="primary" className='add_btn' onClick={showAddModal}>Add User</Button>
+                        <div className='nav__wrapper'>
+                            <Button type="primary" className='add_btn' onClick={showAddModal}>Add User</Button>
+                            <Button type="primary" className='add_btn' onClick={() => navigate('/piechart')}>Pie Chart</Button>
+                        </div>
                         <Table
                             style={{ marginTop: '20px' }}
                             columns={columns}

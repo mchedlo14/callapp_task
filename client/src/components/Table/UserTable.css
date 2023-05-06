@@ -6,6 +6,13 @@
   width: 200px;
   height: 40px;
 }
+.table__wrapper .nav__wrapper {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 .btn__wrapper {
   display: flex;

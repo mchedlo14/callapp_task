@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import useJsonDataStore from './zustand/store';
 import UserTable from './components/Table/UserTable';
 import AntChart from './components/AntChart/AntChart';
-import './App.css'
-import { Header } from 'antd/es/layout/layout';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,8 +30,13 @@ const App = () => {
 
   return (
     <div>
-      <UserTable />
-      <AntChart />
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<UserTable />} />
+          <Route path='/piechart' element={<AntChart />} />
+        </Routes>
+
+      </BrowserRouter>
     </div>
   )
 }
