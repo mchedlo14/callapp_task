@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useJsonDataStore from './zustand/store';
-import axios from 'axios';
+import Table from './components/Table/Table';
 
 
 const App = () => {
@@ -14,17 +14,19 @@ const App = () => {
     setIsLoading(false)
   }
 
-    useEffect(() => {
-      setIsLoading(true);
-      getUsersData()
-    }, []);
+  useEffect(() => {
+    setIsLoading(true);
+    getUsersData()
+  }, []);
 
 
 
-  
+
 
   return (
-    <div>App</div>
+    <div>
+      <Table />   
+    </div>
   )
 }
 
