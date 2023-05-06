@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react'
 import { Chart } from 'react-google-charts';
 import useJsonDataStore from '../../zustand/store'
+import './AntChart.css'
+import backArrow from '../../assets/icons/arrow.svg'
+import { useNavigate } from 'react-router-dom';
 
 const AntChart = () => {
 
     const userData = useJsonDataStore((state) => state.jsonData);
+    const navigate = useNavigate()
 
     let chartData = [['City', 'Percentage']];
 
@@ -27,7 +31,11 @@ const AntChart = () => {
     }
 
     return (
-        <div>
+        <div className='chart__wrapper'>
+            <div className='icon__wrapper' onClick={() => navigate('/')}>
+                <img src={backArrow} alt='arrow icon'/>
+                <p>Back to home</p>
+            </div>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               { userData === null ? <>Loading</> :
                   <Chart
