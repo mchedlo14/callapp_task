@@ -7,9 +7,13 @@ const port = 3000;
 
 const cors = require('cors');
 
+const corsOptions = {
+  origin: '*',
+}
+app.use(cors(corsOptions));
 
-const jsonParser = bodyParser.json()
- 
+
+const jsonParser = bodyParser.json() 
 const data = fs.readFileSync('data.json');
 let jsonData = JSON.parse(data);
 
@@ -23,21 +27,9 @@ const getMaxUserID = () => {
     return maxID
 }
 
-const allowedOrigins = ['*'];
-app.use(cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    }
-  }));
-
 app.get('/data',(req,res) => {
     res.json(jsonData)
 })
-
 
 app.get('/data/:id', (req, res) => {
     const id = req.params.id;
