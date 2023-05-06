@@ -3,6 +3,7 @@ import { Chart } from 'react-google-charts';
 import './AntChart.css'
 import backArrow from '../../assets/icons/arrow.svg'
 import { useNavigate } from 'react-router-dom';
+import Loader from '../Loader/Loader';
 
 const AntChart = () => {
     const [data, setData] = useState([])
@@ -27,7 +28,7 @@ const AntChart = () => {
                 <p>Back to home</p>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                {data.length < 0 ? <>Loading</> :
+                {data.length < 0 ? <Loader /> :
                     <Chart
                         width={'500px'}
                         height={'300px'}

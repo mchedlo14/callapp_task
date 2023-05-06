@@ -4,6 +4,7 @@ import useJsonDataStore from '../../zustand/store';
 import { Table, Button, Modal, Input, Select } from 'antd';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import Loader from '../Loader/Loader';
 
 
 
@@ -174,7 +175,7 @@ const UserTable = () => {
     return (
         <div className='table__wrapper'>
             {
-                userData === null ? <>Loading</>
+                userData === null ? <Loader />
                     :
                     <>
                         <div className='nav__wrapper'>
