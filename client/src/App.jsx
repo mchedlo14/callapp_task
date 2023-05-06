@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useJsonDataStore from './zustand/store';
 import UserTable from './components/Table/UserTable';
+import AntChart from './components/AntChart/AntChart';
 
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
   return (
     <div>
       <UserTable />
+      <AntChart />
     </div>
   )
 }
