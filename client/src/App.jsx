@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import useJsonDataStore from './zustand/store';
 import UserTable from './components/Table/UserTable';
 import AntChart from './components/AntChart/AntChart';
-
+import './App.css'
+import { Header } from 'antd/es/layout/layout';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(false);
