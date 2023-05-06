@@ -1,0 +1,22 @@
+.table__wrapper{
+    margin-top: 20px;
+    padding: 20px;
+    .add_btn{
+        width: 200px;
+        height: 40px;
+    }
+}
+
+.btn__wrapper{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    .delete__btn{
+        background-color: #FF0000;
+        color: #fff;
+        &:hover{
+            border: 1px solid transparent;
+            color: #fff;
+        }
+    }
+}

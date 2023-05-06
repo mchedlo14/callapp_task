@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useJsonDataStore from './zustand/store';
-import Table from './components/Table/Table';
+import UserTable from './components/Table/UserTable';
 
 
 const App = () => {
@@ -14,18 +14,18 @@ const App = () => {
     setIsLoading(false)
   }
 
+  const userData = useJsonDataStore((state) => state.jsonData);
+
+
   useEffect(() => {
     setIsLoading(true);
     getUsersData()
-  }, []);
-
-
-
+  }, [userData]);
 
 
   return (
     <div>
-      <Table />   
+      <UserTable />
     </div>
   )
 }
