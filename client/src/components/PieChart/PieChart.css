@@ -14,4 +14,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}/*# sourceMappingURL=AntChart.css.map */
+}
+.chart__wrapper .main__content {
+  display: flex;
+  justify-content: center;
+}/*# sourceMappingURL=PieChart.css.map */
