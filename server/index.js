@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser')
 const fs = require('fs');
 
 const app = express();
@@ -6,9 +7,24 @@ const port = 3000;
 
 const cors = require('cors');
 
-// app.use(cors)
 
-const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173'];
+const jsonParser = bodyParser.json()
+ 
+
+const data = fs.readFileSync('data.json');
+let jsonData = JSON.parse(data);
+
+const getMaxUserID = () => {
+    let maxID = 0
+    jsonData.forEach(element => {
+        if (element.id > maxID) {
+            maxID = element.id
+        }
+    });
+    return maxID
+}
+
+const allowedOrigins = ['*'];
 app.use(cors({
     origin: function (origin, callback) {
       if (!origin || allowedOrigins.indexOf(origin) !== -1) {
@@ -18,12 +34,6 @@ app.use(cors({
       }
     }
   }));
-
-
-
-// Read data from JSON file
-let data = fs.readFileSync('data.json');
-let jsonData = JSON.parse(data);
 
 app.get('/data',(req,res) => {
     res.json(jsonData)
@@ -41,55 +51,28 @@ app.get('/data/:id', (req, res) => {
     }
 });
 
-app.post('/data', (req, res) => {
-  // Get new data from request body
-  let newData = req.body;
+app.post('/data', jsonParser, (req, res) => {
+  let dataToAdd = req.body
 
-  // Add new data to JSON data
-  jsonData.push(newData);
+  let newUniqIDForUserToAdd = getMaxUserID() + 1
+  dataToAdd["id"] = newUniqIDForUserToAdd
+  jsonData.push(dataToAdd)
 
-  // Write updated data to file
-  fs.writeFileSync('data.json', JSON.stringify(jsonData));
+  lastAddedData = jsonData.filter(item => item.id === newUniqIDForUserToAdd)
 
-  res.json(jsonData);
+  res.json(lastAddedData);
 });
 
-app.put('/data/:id', (req, res) => {
-  // Get data ID from URL parameter
-  let id = req.params.id;
-
-  // Get updated data from request body
-  let updatedData = req.body;
-
-  // Find data by ID and update it
-  jsonData.forEach((data, index) => {
-    if (data.id === id) {
-      jsonData[index] = updatedData;
-    }
-  });
-
-  // Write updated data to file
-  fs.writeFileSync('data.json', JSON.stringify(jsonData));
-
-  // Find the updated data by ID and return it as the response
-  let changedData = jsonData.find((data) => data.id === id);
-  res.json(changedData);
-});
 
 app.delete('/data/:id', (req, res) => {
-  // Get data ID from URL parameter
   let id = req.params.id;
 
-  // Find data by ID and remove it
-  jsonData = jsonData.filter((data) => data.id !== id);
+  jsonData = jsonData.filter((data) => data.id !== parseInt(id));
+  console.log(jsonData)
 
-  // Write updated data to file
-  fs.writeFileSync('data.json', JSON.stringify(jsonData));
-
-  res.json(jsonData);
+  res.json("Row Deleted");
 });
 
-// Start server
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });
