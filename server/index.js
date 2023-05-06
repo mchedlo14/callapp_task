@@ -10,7 +10,6 @@ const cors = require('cors');
 
 const jsonParser = bodyParser.json()
  
-
 const data = fs.readFileSync('data.json');
 let jsonData = JSON.parse(data);
 
@@ -42,7 +41,6 @@ app.get('/data',(req,res) => {
 
 app.get('/data/:id', (req, res) => {
     const id = req.params.id;
-    // console.log(id )    
     const filteredData = jsonData.filter(item => item.id === parseInt(id));
     if (filteredData.length > 0) {
         res.json(filteredData[0]);
@@ -59,6 +57,26 @@ app.post('/data', jsonParser, (req, res) => {
   jsonData.push(dataToAdd)
 
   lastAddedData = jsonData.filter(item => item.id === newUniqIDForUserToAdd)
+
+  res.json(lastAddedData);
+});
+
+app.put('/data/:id', jsonParser, (req, res) => {
+  const id = req.params.id;
+  let userUpdatedData = req.body
+
+  jsonData.forEach(element => {
+      if (element.id === parseInt(id)) {
+        element.name = userUpdatedData.name
+        element.email = userUpdatedData.email
+        element.gender = userUpdatedData.gender
+        element.address.street = userUpdatedData.address.street
+        element.address.city  = userUpdatedData.address.city
+        element.phone = userUpdatedData.phone
+      }
+  });
+
+  lastAddedData = jsonData.filter(item => item.id === parseInt(id))
 
   res.json(lastAddedData);
 });
