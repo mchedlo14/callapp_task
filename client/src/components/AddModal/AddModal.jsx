@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import "./AddModal.css";
-import { Modal, Input, Select } from "antd";
-import axios from "axios";
-const AddModal = ({  setAddModal, addModal }) => {
+import {Input, Modal, Select} from "antd";
+import {createUser} from "../../utils/users-api/users.utils";
+import React, {useState} from "react";
+
+const AddModal = ({setAddModal, addModal}) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -31,7 +31,7 @@ const AddModal = ({  setAddModal, addModal }) => {
         gender: gender,
       };
 
-      const response = await axios.post("http://localhost:3000/data", data);
+      const response = await createUser(data)
       console.log("Data sent to server:", response.data);
     } catch (error) {
       console.error("Error While sending data:", error);
@@ -53,25 +53,25 @@ const AddModal = ({  setAddModal, addModal }) => {
           placeholder="name"
           defaultValue={""}
           onChange={(e) => setName(e.target.value)}
-          style={{ marginTop: "10px" }}
+          style={{marginTop: "10px"}}
         />
         <Input
           name="email"
           placeholder="email"
           onChange={(e) => setEmail(e.target.value)}
-          style={{ marginTop: "10px" }}
+          style={{marginTop: "10px"}}
         />
         <Input
           name="phone"
           placeholder="phone"
           onChange={(e) => setPhone(e.target.value)}
-          style={{ marginTop: "10px" }}
+          style={{marginTop: "10px"}}
         />
         <Select
           placeholder="Select gender"
           onChange={handleGenderChange}
           value={gender}
-          style={{ marginTop: "10px", width: "100%" }}
+          style={{marginTop: "10px", width: "100%"}}
         >
           <Option value="male">Male</Option>
           <Option value="female">Female</Option>
@@ -80,13 +80,13 @@ const AddModal = ({  setAddModal, addModal }) => {
           name="street"
           placeholder="street"
           onChange={(e) => setStreet(e.target.value)}
-          style={{ marginTop: "10px" }}
+          style={{marginTop: "10px"}}
         />
         <Input
           name="city"
           placeholder="city"
           onChange={(e) => setCity(e.target.value)}
-          style={{ marginTop: "10px" }}
+          style={{marginTop: "10px"}}
         />
       </>
     </Modal>

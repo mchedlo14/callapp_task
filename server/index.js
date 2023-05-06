@@ -28,11 +28,11 @@ const getMaxUserID = () => {
   return maxID
 }
 
-app.get('/data', (req, res) => {
+app.get('/api/users', (req, res) => {
   res.json(jsonData)
 })
 
-app.get('/data/:id', (req, res) => {
+app.get('/api/users/:id', (req, res) => {
   const id = req.params.id;
   const filteredData = jsonData.filter(item => item.id === parseInt(id));
   if (filteredData.length > 0) {
@@ -42,7 +42,7 @@ app.get('/data/:id', (req, res) => {
   }
 });
 
-app.post('/data', jsonParser, (req, res) => {
+app.post('/api/users', jsonParser, (req, res) => {
   let dataToAdd = req.body
 
   let newUniqIDForUserToAdd = getMaxUserID() + 1
@@ -54,7 +54,7 @@ app.post('/data', jsonParser, (req, res) => {
   res.json(lastAddedData);
 });
 
-app.put('/data/:id', jsonParser, (req, res) => {
+app.put('/api/users/:id', jsonParser, (req, res) => {
   const id = req.params.id;
   let userUpdatedData = req.body
 
@@ -75,7 +75,7 @@ app.put('/data/:id', jsonParser, (req, res) => {
 });
 
 
-app.delete('/data/:id', (req, res) => {
+app.delete('/api/users/:id', (req, res) => {
   let id = req.params.id;
 
   jsonData = jsonData.filter((data) => data.id !== parseInt(id));
@@ -84,7 +84,7 @@ app.delete('/data/:id', (req, res) => {
   res.json("Row Deleted");
 });
 
-app.get('/analytics', (req, res) => {
+app.get('/api/analytics', (req, res) => {
   let analytics = new Map()
   let totalUsers = jsonData.length
   jsonData.forEach(item => {

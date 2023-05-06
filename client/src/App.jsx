@@ -1,28 +1,30 @@
-import React, { useEffect, useState } from "react";
-import useJsonDataStore from "./zustand/store";
-import UserTable from "./components/Table/UserTable";
+import {useEffect} from "react";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import AntChart from "./components/PieChart/PieChart";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import UserTable from "./components/Table/UserTable";
+import {listUsers} from "./utils/users-api/users.utils.js";
+import useJsonDataStore from "./zustand/store";
 
 const App = () => {
   const getUsersData = async () => {
-    const response = await fetch("http://localhost:3000/data");
-    const jsonData = await response.json();
-    useJsonDataStore.setState({ jsonData });
+    const jsonData = await listUsers()
+    useJsonDataStore.setState({jsonData});
   };
 
   const userData = useJsonDataStore((state) => state.jsonData);
 
   useEffect(() => {
-    getUsersData();
+    (async () => {
+      await getUsersData()
+    })()
   }, [userData]);
 
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<UserTable />} />
-          <Route path="/piechart" element={<AntChart />} />
+          <Route path="/" element={<UserTable/>}/>
+          <Route path="/piechart" element={<AntChart/>}/>
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,6 +1,7 @@
 import React from "react";
+import {LineWave} from "react-loader-spinner";
 import "./Loader.css";
-import { LineWave } from "react-loader-spinner";
+
 const Loader = () => {
   return (
     <div className="loader__wrapper">

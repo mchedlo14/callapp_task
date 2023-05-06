@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import "./UserTable.css";
+import {Button, Input, Modal, Select, Table} from "antd";
+import {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {deleteUser, updateUser} from "../../utils/users-api/users.utils.js";
 import useJsonDataStore from "../../zustand/store";
-import { Table, Button, Modal, Input, Select } from "antd";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import Loader from "../Loader/Loader";
 import AddModal from "../AddModal/AddModal";
+import Loader from "../Loader/Loader";
+import "./UserTable.css";
 
 const UserTable = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -20,7 +20,7 @@ const UserTable = () => {
 
   const userData = useJsonDataStore((state) => state.jsonData);
 
-  const { Option } = Select;
+  const {Option} = Select;
   const navigate = useNavigate();
 
   const showAddModal = () => {
@@ -41,13 +41,12 @@ const UserTable = () => {
         gender: gender,
       };
 
-      const response = await axios.put(
-        `http://localhost:3000/data/${data.id}`,
-        data
-      );
+      await updateUser(data.id, data)
+
     } catch (error) {
       console.error("Error While sending data:", error);
     }
+
     setIsModalVisible(false);
   };
 
@@ -106,9 +105,9 @@ const UserTable = () => {
   ];
 
   //delete row
-  const handleDelete = (record) => {
+  const handleDelete = async (record) => {
     try {
-      axios.delete(`http://localhost:3000/data/${record.id}`);
+      await deleteUser(record.id)
     } catch (error) {
       console.error(error);
     }
@@ -137,7 +136,7 @@ const UserTable = () => {
   return (
     <div className="table__wrapper">
       {userData === null ? (
-        <Loader />
+        <Loader/>
       ) : (
         <>
           <div className="nav__wrapper">
@@ -153,7 +152,7 @@ const UserTable = () => {
             </Button>
           </div>
           <Table
-            style={{ marginTop: "20px" }}
+            style={{marginTop: "20px"}}
             columns={columns}
             dataSource={userData}
             onRow={(record) => ({
@@ -175,27 +174,27 @@ const UserTable = () => {
             placeholder="name"
             onChange={(e) => setName(e.target.value)}
             value={name}
-            style={{ marginTop: "10px" }}
+            style={{marginTop: "10px"}}
           />
           <Input
             name="email"
             placeholder="email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
-            style={{ marginTop: "10px" }}
+            style={{marginTop: "10px"}}
           />
           <Input
             name="phone"
             placeholder="phone"
             onChange={(e) => setPhone(e.target.value)}
             value={phone}
-            style={{ marginTop: "10px" }}
+            style={{marginTop: "10px"}}
           />
           <Select
             labelInValue={false}
             onChange={handleGenderChange}
             value={gender}
-            style={{ marginTop: "10px", width: "100%" }}
+            style={{marginTop: "10px", width: "100%"}}
           >
             <Option value="male">Male</Option>
             <Option value="female">Female</Option>
@@ -205,14 +204,14 @@ const UserTable = () => {
             placeholder="street"
             onChange={(e) => setStreet(e.target.value)}
             value={street}
-            style={{ marginTop: "10px" }}
+            style={{marginTop: "10px"}}
           />
           <Input
             name="city"
             placeholder="city"
             onChange={(e) => setCity(e.target.value)}
             value={city}
-            style={{ marginTop: "10px" }}
+            style={{marginTop: "10px"}}
           />
         </>
       </Modal>

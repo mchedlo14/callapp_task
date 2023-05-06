@@ -1,1 +1,6 @@
+# JetBrains
 .idea
+
+# Node
+server/node_modules
+client/node_modules
